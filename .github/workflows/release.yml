@@ -1,6 +1,7 @@
 name: Release
 
 concurrency:
+  # it's waiting for CI check until it's finished
   group: refs/heads/main
 
 on:
