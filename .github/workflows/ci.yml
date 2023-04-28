@@ -1,0 +1,37 @@
+name: CI
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    tags:
+      - '!**'
+    branches:
+      - '**'
+
+jobs:
+  checks:
+    name: Checks
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup
+        id: setup
+        uses: actions/setup-node@v3
+        with:
+            node-version-file: '.nvmrc'
+            cache: 'npm'
+            cache-dependency-path: |
+              package-lock.json
+
+      - name: Install
+        run: npm ci
+        shell: bash
+
+      - name: Type check
+        run: npm run typecheck
