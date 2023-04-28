@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/Beraliv/workflows/issues"
   },
-  "homepage": "https://github.com/Beraliv/workflows#readme"
+  "homepage": "https://github.com/Beraliv/workflows#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  }
 }
