@@ -1,0 +1,53 @@
+name: Release
+
+concurrency:
+    group: refs/heads/main
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        type: choice
+        description: Release type
+        required: true
+        options:
+          - Latest
+          - Preview
+          - Hotfix
+
+jobs:
+  release:
+    name: Release
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup
+        id: setup
+        uses: actions/setup-node@v3
+        with:
+            node-version-file: '.nvmrc'
+            cache: 'npm'
+            cache-dependency-path: |
+              package-lock.json
+
+      - name: Install
+        run: npm ci
+        shell: bash
+
+      - name: Version
+        id: version
+        run: |
+          echo "version=$(npx ts-node ./scripts/version.ts)" >> $GITHUB_OUTPUT
+
+      - name: Tag
+        run: |
+          npx ts-node ./scripts/tag.ts --version=${{steps.version.outputs.version}}
+
+      - name: Release
+        run: |
+          npx ts-node ./scripts/release.ts --releaseType=${{github.event.inputs.release-type}}
+
+  

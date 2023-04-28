@@ -16,5 +16,10 @@
       // different options with a single tsconfig.json.
     }
   },
-  "compilerOptions": { "strict": true, "skipLibCheck": true, "noEmit": true }
+  "compilerOptions": {
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "resolveJsonModule": true
+  }
 }
