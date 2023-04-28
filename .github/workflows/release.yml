@@ -1,7 +1,7 @@
 name: Release
 
 concurrency:
-    group: refs/heads/main
+  group: refs/heads/main
 
 on:
   workflow_dispatch:
@@ -21,6 +21,11 @@ jobs:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
+      - name: Info
+        run: |
+          echo "GitHub workflow: ${{ github.workflow }}"
+          echo "GitHub ref: ${{ github.ref }}"
+
       - name: Checkout
         uses: actions/checkout@v3
 

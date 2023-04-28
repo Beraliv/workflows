@@ -17,6 +17,11 @@ jobs:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
+      - name: Info
+        run: |
+          echo "GitHub workflow: ${{ github.workflow }}"
+          echo "GitHub ref: ${{ github.ref }}"
+
       - name: Checkout
         uses: actions/checkout@v3
 
